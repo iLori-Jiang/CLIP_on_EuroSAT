@@ -1,0 +1,356 @@
+***************
+** Arguments **
+***************
+backbone: 
+config_file: configs/trainers/CoCoOp/vit_b16_c4_ep10_batch1_ctxv1.yaml
+dataset_config_file: configs/datasets/eurosat.yaml
+eval_only: False
+head: 
+load_epoch: None
+model_dir: 
+no_train: False
+opts: ['DATASET.NUM_SHOTS', '16', 'DATASET.SUBSAMPLE_CLASSES', 'base']
+output_dir: output/base2new/train_base/eurosat/shots_16/CoCoOp/vit_b16_c4_ep10_batch1_ctxv1/seed2
+resume: 
+root: /Data/CV_Proj
+seed: 2
+source_domains: None
+target_domains: None
+trainer: CoCoOp
+transforms: None
+************
+** Config **
+************
+DATALOADER:
+  K_TRANSFORMS: 1
+  NUM_WORKERS: 8
+  RETURN_IMG0: False
+  TEST:
+    BATCH_SIZE: 100
+    SAMPLER: SequentialSampler
+  TRAIN_U:
+    BATCH_SIZE: 32
+    N_DOMAIN: 0
+    N_INS: 16
+    SAME_AS_X: True
+    SAMPLER: RandomSampler
+  TRAIN_X:
+    BATCH_SIZE: 1
+    N_DOMAIN: 0
+    N_INS: 16
+    SAMPLER: RandomSampler
+DATASET:
+  ALL_AS_UNLABELED: False
+  CIFAR_C_LEVEL: 1
+  CIFAR_C_TYPE: 
+  NAME: EuroSAT
+  NUM_LABELED: -1
+  NUM_SHOTS: 16
+  ROOT: /Data/CV_Proj
+  SOURCE_DOMAINS: ()
+  STL10_FOLD: -1
+  SUBSAMPLE_CLASSES: base
+  TARGET_DOMAINS: ()
+  VAL_PERCENT: 0.1
+INPUT:
+  COLORJITTER_B: 0.4
+  COLORJITTER_C: 0.4
+  COLORJITTER_H: 0.1
+  COLORJITTER_S: 0.4
+  CROP_PADDING: 4
+  CUTOUT_LEN: 16
+  CUTOUT_N: 1
+  GB_K: 21
+  GB_P: 0.5
+  GN_MEAN: 0.0
+  GN_STD: 0.15
+  INTERPOLATION: bicubic
+  NO_TRANSFORM: False
+  PIXEL_MEAN: [0.48145466, 0.4578275, 0.40821073]
+  PIXEL_STD: [0.26862954, 0.26130258, 0.27577711]
+  RANDAUGMENT_M: 10
+  RANDAUGMENT_N: 2
+  RGS_P: 0.2
+  RRCROP_SCALE: (0.08, 1.0)
+  SIZE: (224, 224)
+  TRANSFORMS: ('random_resized_crop', 'random_flip', 'normalize')
+MODEL:
+  BACKBONE:
+    NAME: ViT-B/16
+    PRETRAINED: True
+  HEAD:
+    ACTIVATION: relu
+    BN: True
+    DROPOUT: 0.0
+    HIDDEN_LAYERS: ()
+    NAME: 
+  INIT_WEIGHTS: 
+OPTIM:
+  ADAM_BETA1: 0.9
+  ADAM_BETA2: 0.999
+  BASE_LR_MULT: 0.1
+  GAMMA: 0.1
+  LR: 0.002
+  LR_SCHEDULER: cosine
+  MAX_EPOCH: 10
+  MOMENTUM: 0.9
+  NAME: sgd
+  NEW_LAYERS: ()
+  RMSPROP_ALPHA: 0.99
+  SGD_DAMPNING: 0
+  SGD_NESTEROV: False
+  STAGED_LR: False
+  STEPSIZE: (-1,)
+  WARMUP_CONS_LR: 1e-05
+  WARMUP_EPOCH: 1
+  WARMUP_MIN_LR: 1e-05
+  WARMUP_RECOUNT: True
+  WARMUP_TYPE: constant
+  WEIGHT_DECAY: 0.0005
+OUTPUT_DIR: output/base2new/train_base/eurosat/shots_16/CoCoOp/vit_b16_c4_ep10_batch1_ctxv1/seed2
+RESUME: 
+SEED: 2
+TEST:
+  COMPUTE_CMAT: False
+  EVALUATOR: Classification
+  FINAL_MODEL: last_step
+  NO_TEST: False
+  PER_CLASS_RESULT: False
+  SPLIT: test
+TRAIN:
+  CHECKPOINT_FREQ: 0
+  COUNT_ITER: train_x
+  PRINT_FREQ: 20
+TRAINER:
+  CDAC:
+    CLASS_LR_MULTI: 10
+    P_THRESH: 0.95
+    RAMPUP_COEF: 30
+    RAMPUP_ITRS: 1000
+    STRONG_TRANSFORMS: ()
+    TOPK_MATCH: 5
+  COCOOP:
+    CTX_INIT: a photo of a
+    N_CTX: 4
+    PREC: fp16
+  COOP:
+    CLASS_TOKEN_POSITION: end
+    CSC: False
+    CTX_INIT: 
+    N_CTX: 16
+    PREC: fp32
+  CROSSGRAD:
+    ALPHA_D: 0.5
+    ALPHA_F: 0.5
+    EPS_D: 1.0
+    EPS_F: 1.0
+  DAEL:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DAELDG:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DDAIG:
+    ALPHA: 0.5
+    CLAMP: False
+    CLAMP_MAX: 1.0
+    CLAMP_MIN: -1.0
+    G_ARCH: 
+    LMDA: 0.3
+    WARMUP: 0
+  DOMAINMIX:
+    ALPHA: 1.0
+    BETA: 1.0
+    TYPE: crossdomain
+  ENTMIN:
+    LMDA: 0.001
+  FIXMATCH:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 1.0
+  M3SDA:
+    LMDA: 0.5
+    N_STEP_F: 4
+  MCD:
+    N_STEP_F: 4
+  MEANTEACHER:
+    EMA_ALPHA: 0.999
+    RAMPUP: 5
+    WEIGHT_U: 1.0
+  MIXMATCH:
+    MIXUP_BETA: 0.75
+    RAMPUP: 20000
+    TEMP: 2.0
+    WEIGHT_U: 100.0
+  MME:
+    LMDA: 0.1
+  NAME: CoCoOp
+  SE:
+    CONF_THRE: 0.95
+    EMA_ALPHA: 0.999
+    RAMPUP: 300
+USE_CUDA: True
+VERBOSE: True
+VERSION: 1
+Collecting env info ...
+** System info **
+PyTorch version: 2.2.1
+Is debug build: False
+CUDA used to build PyTorch: Could not collect
+ROCM used to build PyTorch: N/A
+
+OS: AlmaLinux 9.3 (Shamrock Pampas Cat) (x86_64)
+GCC version: (GCC) 11.4.1 20230605 (Red Hat 11.4.1-2)
+Clang version: 16.0.6 (Red Hat 16.0.6-1.el9)
+CMake version: version 3.20.2
+Libc version: glibc-2.34
+
+Python version: 3.8.18 (default, Sep 11 2023, 13:40:15)  [GCC 11.2.0] (64-bit runtime)
+Python platform: Linux-5.14.0-362.18.1.el9_3.x86_64-x86_64-with-glibc2.17
+Is CUDA available: False
+CUDA runtime version: 12.2.91
+CUDA_MODULE_LOADING set to: N/A
+GPU models and configuration: GPU 0: NVIDIA RTX A2000 12GB
+Nvidia driver version: 535.154.05
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+Is XNNPACK available: True
+
+CPU:
+Architecture:                       x86_64
+CPU op-mode(s):                     32-bit, 64-bit
+Address sizes:                      39 bits physical, 48 bits virtual
+Byte Order:                         Little Endian
+CPU(s):                             20
+On-line CPU(s) list:                0-19
+Vendor ID:                          GenuineIntel
+Model name:                         Intel(R) Xeon(R) W-1290P CPU @ 3.70GHz
+CPU family:                         6
+Model:                              165
+Thread(s) per core:                 2
+Core(s) per socket:                 10
+Socket(s):                          1
+Stepping:                           5
+CPU max MHz:                        5300.0000
+CPU min MHz:                        800.0000
+BogoMIPS:                           7399.70
+Flags:                              fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp vnmi pku ospke md_clear flush_l1d arch_capabilities
+Virtualization:                     VT-x
+L1d cache:                          320 KiB (10 instances)
+L1i cache:                          320 KiB (10 instances)
+L2 cache:                           2.5 MiB (10 instances)
+L3 cache:                           20 MiB (1 instance)
+NUMA node(s):                       1
+NUMA node0 CPU(s):                  0-19
+Vulnerability Gather data sampling: Mitigation; Microcode
+Vulnerability Itlb multihit:        KVM: Mitigation: VMX disabled
+Vulnerability L1tf:                 Not affected
+Vulnerability Mds:                  Not affected
+Vulnerability Meltdown:             Not affected
+Vulnerability Mmio stale data:      Mitigation; Clear CPU buffers; SMT vulnerable
+Vulnerability Retbleed:             Mitigation; Enhanced IBRS
+Vulnerability Spec rstack overflow: Not affected
+Vulnerability Spec store bypass:    Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:           Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:           Mitigation; Enhanced / Automatic IBRS, IBPB conditional, RSB filling, PBRSB-eIBRS SW sequence
+Vulnerability Srbds:                Mitigation; Microcode
+Vulnerability Tsx async abort:      Not affected
+
+Versions of relevant libraries:
+[pip3] flake8==3.7.9
+[pip3] numpy==1.24.3
+[pip3] torch==2.2.1
+[pip3] torchvision==0.17.1
+[conda] blas                      1.0                         mkl  
+[conda] cudatoolkit               10.2.89              hfd86e86_1  
+[conda] ffmpeg                    4.3                  hf484d3e_0    pytorch
+[conda] libjpeg-turbo             2.0.0                h9bf148f_0    pytorch
+[conda] mkl                       2023.1.0         h213fc3f_46344  
+[conda] mkl-service               2.4.0            py38h5eee18b_1  
+[conda] mkl_fft                   1.3.8            py38h5eee18b_0  
+[conda] mkl_random                1.2.4            py38hdb19cb5_0  
+[conda] numpy                     1.24.3           py38hf6e8229_1  
+[conda] numpy-base                1.24.3           py38h060ed82_1  
+[conda] pytorch                   2.2.1               py3.8_cpu_0    pytorch
+[conda] pytorch-mutex             1.0                         cpu    pytorch
+[conda] torchvision               0.17.1                 py38_cpu    pytorch
+        Pillow (10.2.0)
+
+Loading trainer: CoCoOp
+Loading dataset: EuroSAT
+Reading split from /Data/CV_Proj/eurosat/split_zhou_EuroSAT.json
+Loading preprocessed few-shot data from /Data/CV_Proj/eurosat/split_fewshot/shot_16-seed_2.pkl
+SUBSAMPLE BASE CLASSES!
+Building transform_train
++ random resized crop (size=(224, 224), scale=(0.08, 1.0))
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+Building transform_test
++ resize the smaller edge to 224
++ 224x224 center crop
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+---------  -------
+Dataset    EuroSAT
+# classes  5
+# train_x  80
+# val      20
+# test     4,200
+---------  -------
+Loading CLIP (backbone: ViT-B/16)
+Building custom CLIP
+Initial context: "a photo of a"
+Number of context words (tokens): 4
+Turning off gradients in both the image and the text encoder
+Parameters to be updated: {'prompt_learner.meta_net.linear2.bias', 'prompt_learner.meta_net.linear2.weight', 'prompt_learner.meta_net.linear1.bias', 'prompt_learner.ctx', 'prompt_learner.meta_net.linear1.weight'}
+Loading evaluator: Classification
+No checkpoint found, train from scratch
+Initialize tensorboard (log_dir=output/base2new/train_base/eurosat/shots_16/CoCoOp/vit_b16_c4_ep10_batch1_ctxv1/seed2/tensorboard)
+epoch [1/10] batch [20/80] time 46.762 (47.128) data 0.001 (0.008) loss 0.7247 (1.4947) lr 1.0000e-05 eta 10:12:39
+epoch [1/10] batch [40/80] time 51.233 (47.537) data 0.001 (0.004) loss 1.7273 (1.2888) lr 1.0000e-05 eta 10:02:08
+epoch [1/10] batch [60/80] time 48.571 (48.391) data 0.001 (0.003) loss 0.5560 (1.2866) lr 1.0000e-05 eta 9:56:49
+epoch [1/10] batch [80/80] time 46.555 (48.173) data 0.001 (0.003) loss 2.3394 (1.2612) lr 2.0000e-03 eta 9:38:04
+epoch [2/10] batch [20/80] time 46.302 (47.583) data 0.001 (0.007) loss 1.2944 (1.1858) lr 2.0000e-03 eta 9:15:07
+epoch [2/10] batch [40/80] time 46.161 (46.883) data 0.001 (0.004) loss 1.8061 (1.0536) lr 2.0000e-03 eta 8:51:20
+epoch [2/10] batch [60/80] time 46.198 (46.636) data 0.001 (0.003) loss 0.7691 (1.0803) lr 2.0000e-03 eta 8:32:59
+epoch [2/10] batch [80/80] time 46.223 (46.513) data 0.001 (0.003) loss 0.3434 (1.0679) lr 1.9511e-03 eta 8:16:08
+epoch [3/10] batch [20/80] time 46.937 (47.273) data 0.001 (0.007) loss 0.8296 (0.7505) lr 1.9511e-03 eta 8:08:29
+epoch [3/10] batch [40/80] time 46.860 (47.169) data 0.001 (0.004) loss 0.6433 (0.8035) lr 1.9511e-03 eta 7:51:41
+epoch [3/10] batch [60/80] time 46.216 (46.956) data 0.001 (0.003) loss 2.0613 (0.8663) lr 1.9511e-03 eta 7:33:54
+epoch [3/10] batch [80/80] time 46.132 (46.763) data 0.001 (0.003) loss 0.0016 (0.8001) lr 1.8090e-03 eta 7:16:27
+epoch [4/10] batch [20/80] time 46.089 (46.106) data 0.001 (0.008) loss 0.0847 (0.8931) lr 1.8090e-03 eta 6:54:57
+epoch [4/10] batch [40/80] time 46.188 (46.162) data 0.001 (0.004) loss 0.1965 (0.7271) lr 1.8090e-03 eta 6:40:04
+epoch [4/10] batch [60/80] time 46.195 (46.227) data 0.001 (0.003) loss 0.4466 (0.7990) lr 1.8090e-03 eta 6:25:13
+epoch [4/10] batch [80/80] time 46.764 (46.261) data 0.001 (0.003) loss 0.0012 (0.7040) lr 1.5878e-03 eta 6:10:05
+epoch [5/10] batch [20/80] time 48.292 (50.308) data 0.001 (0.008) loss 0.1144 (0.4434) lr 1.5878e-03 eta 6:25:41
+epoch [5/10] batch [40/80] time 47.318 (48.844) data 0.001 (0.005) loss 0.5077 (0.5822) lr 1.5878e-03 eta 5:58:11
+epoch [5/10] batch [60/80] time 46.345 (48.839) data 0.001 (0.004) loss 0.0009 (0.5035) lr 1.5878e-03 eta 5:41:52
+epoch [5/10] batch [80/80] time 46.473 (48.213) data 0.001 (0.003) loss 1.3673 (0.5381) lr 1.3090e-03 eta 5:21:25
+epoch [6/10] batch [20/80] time 47.062 (46.772) data 0.001 (0.006) loss 1.1173 (0.7214) lr 1.3090e-03 eta 4:56:13
+epoch [6/10] batch [40/80] time 47.214 (46.920) data 0.001 (0.004) loss 0.1046 (0.6610) lr 1.3090e-03 eta 4:41:31
+epoch [6/10] batch [60/80] time 50.780 (47.376) data 0.001 (0.003) loss 0.2433 (0.4991) lr 1.3090e-03 eta 4:28:27
+epoch [6/10] batch [80/80] time 49.313 (48.100) data 0.001 (0.002) loss 0.7078 (0.5094) lr 1.0000e-03 eta 4:16:31
+epoch [7/10] batch [20/80] time 46.419 (46.878) data 0.001 (0.008) loss 1.6765 (0.4588) lr 1.0000e-03 eta 3:54:23
+epoch [7/10] batch [40/80] time 48.411 (47.783) data 0.001 (0.005) loss 2.1908 (0.5021) lr 1.0000e-03 eta 3:42:59
+epoch [7/10] batch [60/80] time 46.730 (47.908) data 0.001 (0.003) loss 0.0018 (0.4164) lr 1.0000e-03 eta 3:27:36
+epoch [7/10] batch [80/80] time 47.247 (47.682) data 0.001 (0.003) loss 0.1572 (0.4455) lr 6.9098e-04 eta 3:10:43
+epoch [8/10] batch [20/80] time 46.947 (47.193) data 0.001 (0.008) loss 0.1821 (0.5476) lr 6.9098e-04 eta 2:53:02
+epoch [8/10] batch [40/80] time 46.739 (47.107) data 0.001 (0.004) loss 0.0084 (0.5181) lr 6.9098e-04 eta 2:37:01
+epoch [8/10] batch [60/80] time 46.924 (47.072) data 0.001 (0.003) loss 0.3165 (0.4817) lr 6.9098e-04 eta 2:21:12
+epoch [8/10] batch [80/80] time 50.626 (47.220) data 0.001 (0.003) loss 0.4706 (0.5425) lr 4.1221e-04 eta 2:05:55
+epoch [9/10] batch [20/80] time 47.002 (46.570) data 0.001 (0.007) loss 0.3613 (0.3522) lr 4.1221e-04 eta 1:48:39
+epoch [9/10] batch [40/80] time 47.247 (46.801) data 0.001 (0.004) loss 1.5752 (0.3833) lr 4.1221e-04 eta 1:33:36
+epoch [9/10] batch [60/80] time 47.031 (46.858) data 0.001 (0.003) loss 1.0660 (0.4214) lr 4.1221e-04 eta 1:18:05
+epoch [9/10] batch [80/80] time 46.944 (46.908) data 0.001 (0.003) loss 0.2575 (0.4132) lr 1.9098e-04 eta 1:02:32
+epoch [10/10] batch [20/80] time 48.030 (46.990) data 0.001 (0.008) loss 0.4434 (0.3564) lr 1.9098e-04 eta 0:46:59
+epoch [10/10] batch [40/80] time 47.515 (47.173) data 0.001 (0.005) loss 1.1457 (0.3408) lr 1.9098e-04 eta 0:31:26
+epoch [10/10] batch [60/80] time 48.265 (47.316) data 0.001 (0.004) loss 0.0293 (0.4692) lr 1.9098e-04 eta 0:15:46
+epoch [10/10] batch [80/80] time 47.798 (47.746) data 0.001 (0.003) loss 0.0394 (0.4685) lr 4.8943e-05 eta 0:00:00
+Checkpoint saved to output/base2new/train_base/eurosat/shots_16/CoCoOp/vit_b16_c4_ep10_batch1_ctxv1/seed2/prompt_learner/model.pth.tar-10
+Finish training
+Deploy the last-epoch model
+Evaluate on the *test* set
