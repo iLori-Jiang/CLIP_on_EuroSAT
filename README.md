@@ -20,6 +20,9 @@ This notebook explores the concept of few-shot learning, specifically 16-shots c
 3. **CoOp.ipynb**:
 Use CoOp approach to learn the 16 context prompt vectors. This notebook explores the performance of the learned prompt using 16 shots on the whole dataset, and provide with multiple query examples for the qualitative result analysis.
 
+4. **Demo.mp4**:
+This is the demo of our final result loading the learned unified 16 context by CoOp for inferencing the queried image.
+
 ## Detail
 
 For both methods we apply 16 shots learning.
